@@ -1,11 +1,14 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: monitoring-grafana
   namespace: kube-system
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: grafana
   template:
     metadata:
       labels:
@@ -26,7 +29,6 @@ spec:
         - name: INFLUXDB_HOST
           value: monitoring-influxdb
         - name: GF_SERVER_HTTP_PORT
-        #- name: GRAFANA_PORT
           value: "3000"
           # The following env variables are required to make Grafana accessible via
           # the kubernetes api-server proxy. On production clusters, we recommend
@@ -40,7 +42,7 @@ spec:
           value: Admin
         - name: GF_SERVER_ROOT_URL
           # If you're only using the API Server proxy, set this value instead:
-          value: /api/v1/proxy/namespaces/kube-system/services/monitoring-grafana/
+          value: /api/v1/namespaces/kube-system/services/monitoring-grafana/proxy/
           #value: /
       volumes:
       - name: grafana-storage
@@ -62,7 +64,6 @@ spec:
   # type: LoadBalancer
   # You could also use NodePort to expose the service at a randomly-generated port
   # type: NodePort
-  type: NodePort
   ports:
   - port: 80
     targetPort: 3000

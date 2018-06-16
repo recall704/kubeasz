@@ -1,7 +1,12 @@
-# 警告：此脚本将清理真个K8S集群，包括所有POD、ETCD数据等
+# 警告：此脚本将清理整个K8S集群，包括所有POD、ETCD数据等
 # 请三思后运行此脚本 ansible-playbook 99.clean.yml
 
-- hosts: kube-node
+# 清理 kube-node 相关服务
+- hosts:
+  - kube-master
+  - new-master
+  - kube-node
+  - new-node
   tasks:
   - name: stop kube-node service
     shell: "systemctl stop kubelet kube-proxy"
@@ -15,12 +20,15 @@
     file: name={{ item }} state=absent
     with_items:
     - "/var/lib/kubelet/"
-    - "/etc/kubernetes/"
+    - "/var/lib/kube-proxy/"
     - "/etc/systemd/system/kubelet.service"
     - "/etc/systemd/system/kube-proxy.service"
-   # - "/root/local/bin/"
+    - "/opt/kube/kube-system/"
 
-- hosts: kube-master
+# 清理 kube-master 相关
+- hosts:
+  - kube-master
+  - new-master
   tasks:
   - name: stop kube-master service
     shell: "systemctl stop kube-apiserver kube-controller-manager kube-scheduler"
@@ -33,12 +41,16 @@
     - "/etc/systemd/system/kube-apiserver.service"
     - "/etc/systemd/system/kube-controller-manager.service"
     - "/etc/systemd/system/kube-scheduler.service"
-    - "/etc/kubernetes/"
 
-- hosts: kube-cluster
+# 清理集群docker服务、网络相关
+- hosts:
+  - kube-master
+  - new-master
+  - kube-node
+  - new-node
   tasks:
-  - name: stop calico-node service
-    shell: "systemctl stop calico-node docker"
+  - name: stop docker service
+    shell: "systemctl stop docker"
     ignore_errors: true
 
   # 因为calico-kube-controller使用了host网络，相当于使用了docker -net=host，需要
@@ -53,6 +65,8 @@
     file: name={{ item }} state=absent
     with_items:
     - "/etc/cni/"
+    - "/root/.kube/"
+    - "/run/flannel/"
     - "/etc/calico/"
     - "/var/run/calico/"
     - "/var/log/calico/"
@@ -69,9 +83,21 @@
 	&& iptables -F -t mangle && iptables -X -t mangle"
 
   - name: 清理网络
-    shell: "ip link del docker0; ip link del tunl0; systemctl restart networking"
+    shell: "ip link del docker0; \
+	ip link del tunl0; \
+	ip link del flannel.1; \
+	ip link del cni0; \
+        ip link del mynet0; \
+	systemctl restart networking; \
+	systemctl restart network"
     ignore_errors: true
 
+  - name: 清理calico残留路由
+    shell: "for rt in `ip route|grep bird|sed 's/blackhole//'|awk '{print $1}'`;do ip route del $rt;done;"
+    when: "CLUSTER_NETWORK == 'calico'"
+    ignore_errors: true
+
+# 清理etcd 集群相关
 - hosts: etcd
   tasks:
   - name: stop etcd service
@@ -85,6 +111,7 @@
     - "/etc/etcd/"
     - "/etc/systemd/system/etcd.service"
 
+# 清理负载均衡相关
 - hosts: lb
   tasks:
   - name: stop keepalived service
@@ -100,5 +127,26 @@
     with_items:
     - "/etc/haproxy"
     - "/etc/keepalived"
-    ignore_errors: true
+
+- hosts: all
+  tasks:
+  - name: 清理证书目录和文件
+    file: name={{ item }} state=absent
+    with_items:
+    - "/etc/kubernetes/"
+    - "{{ ca_dir }}" 
+    - "/root/.kube/"
+    - "/etc/docker/"
+
+  - name: 清理自动生成的PATH
+    lineinfile:
+      dest: ~/.bashrc
+      state: absent
+      regexp: 'kubeasz'
+
+  - name: 清理 kubectl 命令自动补全 
+    lineinfile:
+      dest: ~/.bashrc
+      state: absent
+      regexp: 'kubectl completion'
 

@@ -16,12 +16,14 @@ kuberntes 系统使用 etcd 存储所有数据，是最重要的组件之一，�
 
 ### 创建etcd证书请求 [etcd-csr.json.j2](../roles/etcd/templates/etcd-csr.json.j2)
 
+首先判断下是否etcd 证书已经存在，如果已经存在就跳过证书生成步骤
+
 ``` bash
 {
   "CN": "etcd",
   "hosts": [
     "127.0.0.1",
-    "{{ NODE_IP }}"
+    "{{ inventory_hostname }}"
   ],
   "key": {
     "algo": "rsa",
@@ -38,7 +40,7 @@ kuberntes 系统使用 etcd 存储所有数据，是最重要的组件之一，�
   ]
 }
 ```
-+ hosts 字段指定授权使用该证书的 etcd 节点 IP
++ etcd使用对等证书，hosts 字段必须指定授权使用该证书的 etcd 节点 IP
 
 ### 创建证书和私钥
 
@@ -49,7 +51,6 @@ cd /etc/etcd/ssl && {{ bin_dir }}/cfssl gencert \
         -config={{ ca_dir }}/ca-config.json \
         -profile=kubernetes etcd-csr.json | {{ bin_dir }}/cfssljson -bare etcd
 ```
-+ 因为证书是在**etcd**节点生成的，所以要用ansible 模块`fetch` 把证书传送到**deploy**节点，以便后续再通过**deploy**节点传送到**calico/node**节点
 
 ###  创建etcd 服务文件 [etcd.service.j2](../roles/etcd/templates/etcd.service.j2)
 
@@ -74,10 +75,10 @@ ExecStart={{ bin_dir }}/etcd \
   --peer-key-file=/etc/etcd/ssl/etcd-key.pem \
   --trusted-ca-file={{ ca_dir }}/ca.pem \
   --peer-trusted-ca-file={{ ca_dir }}/ca.pem \
-  --initial-advertise-peer-urls=https://{{ NODE_IP }}:2380 \
-  --listen-peer-urls=https://{{ NODE_IP }}:2380 \
-  --listen-client-urls=https://{{ NODE_IP }}:2379,http://127.0.0.1:2379 \
-  --advertise-client-urls=https://{{ NODE_IP }}:2379 \
+  --initial-advertise-peer-urls=https://{{ inventory_hostname }}:2380 \
+  --listen-peer-urls=https://{{ inventory_hostname }}:2380 \
+  --listen-client-urls=https://{{ inventory_hostname }}:2379,http://127.0.0.1:2379 \
+  --advertise-client-urls=https://{{ inventory_hostname }}:2379 \
   --initial-cluster-token=etcd-cluster-0 \
   --initial-cluster={{ ETCD_NODES }} \
   --initial-cluster-state=new \
@@ -90,8 +91,8 @@ LimitNOFILE=65536
 WantedBy=multi-user.target
 ```
 + 完整参数列表请使用 `etcd --help` 查询
++ 注意etcd 即需要服务器证书也需要客户端证书，这里为方便使用一个peer 证书代替两个证书，更多证书相关请阅读 [01-创建CA证书和环境配置.md](01-创建CA证书和环境配置.md)
 + 注意{{ }} 中的参数与ansible hosts文件中设置对应
-+ 为了保证通信安全，需要指定 etcd 的公私钥(cert-file和key-file)、Peers 通信的公私钥和 CA 证书(peer-cert-file、peer-key-file、peer-trusted-ca-file)、客户端的CA证书（trusted-ca-file）；
 + `--initial-cluster-state` 值为 `new` 时，`--name` 的参数值必须位于 `--initial-cluster` 列表中；
 
 ### 启动etcd服务
@@ -110,7 +111,7 @@ systemctl daemon-reload && systemctl enable etcd && systemctl start etcd
 # 根据hosts中配置设置shell变量 $NODE_IPS
 export NODE_IPS="192.168.1.1 192.168.1.2 192.168.1.3"
 $ for ip in ${NODE_IPS}; do
-  ETCDCTL_API=3 /root/local/bin/etcdctl \
+  ETCDCTL_API=3 etcdctl \
   --endpoints=https://${ip}:2379  \
   --cacert=/etc/kubernetes/ssl/ca.pem \
   --cert=/etc/etcd/ssl/etcd.pem \
@@ -125,3 +126,6 @@ https://192.168.1.2:2379 is healthy: successfully committed proposal: took = 2.7
 https://192.168.1.3:2379 is healthy: successfully committed proposal: took = 3.275709ms
 ```
 三台 etcd 的输出均为 healthy 时表示集群服务正常。
+
+
+[前一篇](01-创建CA证书和环境配置.md) -- [后一篇](04-安装docker服务.md)
