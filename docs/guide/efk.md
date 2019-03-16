@@ -135,7 +135,7 @@ es0  es1  es2
 
 #### 使用动态 PV安装 EFK
 
-- 首先根据[这里](nfs-client.md)创建nfs-client-provisioner
+- 首先根据[集群存储](../setup/08-cluster-storage.md)创建nfs-client-provisioner
 - 然后按实际需求修改 `es-dynamic-pv/es-statefulset.yaml` 文件中 volumeClaimTemplates 设置的 storage: 4Gi 大小   
 
 ``` bash
@@ -193,4 +193,3 @@ kube-system-elasticsearch-logging-elasticsearch-logging-1-pvc-5b105ee6-358b-11e8
 1. [storage-classes](https://kubernetes.io/docs/concepts/storage/storage-classes/)
 
 
-[前一篇](ingress.md) -- [目录](index.md) -- [后一篇](harbor.md)

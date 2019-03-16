@@ -10,7 +10,9 @@
 - helm  
 为了简化部署，通过helm来安装Jenkins，可参考文档：[helm](helm.md)
 - 持久化存储  
-这里使用**NFS**演示，参考文档：[nfs-client](nfs-client.md)。如果k8s集群是部署在公有云，也可使用厂商的NAS等存储方案，具体参考相关厂商文档
+这里使用**NFS**演示，参考文档：[cluster-storage](../setup/08-cluster-storage.md)。
+如果k8s集群是部署在公有云，也可使用厂商的NAS等存储方案，项目中已集成支持阿里云NAS，其他的方案参考相关厂商文档
+
 - Ingress Controller(nginx-ingress/traefik)  
 默认是通过Ingress访问Jenkins，因此需要安装一种`Ingress Controller`。参考文档：[ingress](ingress.md)
 - Gitlab 代码管理仓库  
@@ -21,6 +23,17 @@
 ```
 helm install manifests/jenkins/ --name jenkins
 ```
+如果通过/etc/ansible/roles/helm/helm.yml安装的helm，安装过程会出现如下错误
+
+``` bash
+E0703 08:40:22.376225   19888 portforward.go:331] an error occurred forwarding 41655 -> 44134: error forwarding port 44134 to pod 5098414beaaa07140a4ba3240690b1ce989ece01e5db33db65eec83bd64bdedf, uid : exit status 1: 2018/07/03 08:40:22 socat[19991] E write(5, 0x1aec120, 3424): Connection reset by peer
+Error: transport is closing
+```
+请执行以下命令快速安装进行修复：
+```
+helm install --tls manifests/jenkins/ --name jenkins
+```
+
 由于初始化过程中，默认安装指定的插件，所以启动较慢，大概5-10分钟左右就可以启动完成了。  
 
 部分默认配置说明：
