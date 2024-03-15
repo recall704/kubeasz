@@ -134,4 +134,7 @@
 - [如何 PR](docs/mixes/HowToContribute.md)
 - [如何捐赠](docs/mixes/donate.md)
 
+## 修改内容
+k8s 1.23 是最后一个支持 docker 的版本，所以从分支 3.2.0 分叉了一个单独开发。
+
 Copyright 2017 gjmzj (jmgaozz@163.com) Apache License 2.0, 详情见 [LICENSE](docs/mixes/LICENSE) 文件。

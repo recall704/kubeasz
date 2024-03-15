@@ -231,3 +231,8 @@ HARBOR_WITH_CHARTMUSEUM: true
 ####################################################################################################
 IMG_CALICO_NODE: calico/node
 IMG_CALICO_CNI: calico/cni
+IMG_CALICO_KUBE_CONTROLLERS: calico/kube-controllers
+IMG_CALICO_POD2DAEMON_FLEXVOL: calico/pod2daemon-flexvol
+
+IMG_COREDNS: coredns/coredns
+IMG_METRICS_SERVER: k8s.gcr.io/metrics-server/metrics-server

@@ -348,7 +348,7 @@ spec:
       serviceAccountName: calico-kube-controllers
       containers:
         - name: calico-kube-controllers
-          image: calico/kube-controllers:{{ calico_ver }}
+          image: {{ IMG_CALICO_KUBE_CONTROLLERS }}:{{ calico_ver }}
           env:
             # The location of the Calico etcd cluster.
             - name: ETCD_ENDPOINTS
