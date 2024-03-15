@@ -1,4 +1,4 @@
-# Calico Version {{ calico_ver }} 
+# Calico Version {{ calico_ver }}
 # https://docs.projectcalico.org/v3.3/releases#{{ calico_ver }}
 # This manifest includes the following component versions:
 #   calico/node:{{ calico_ver }}
@@ -110,7 +110,7 @@ spec:
         # container programs network policy and routes on each
         # host.
         - name: calico-node
-          image: calico/node:{{ calico_ver }}
+          image: {{ IMG_CALICO_NODE }}:{{ calico_ver }}
           env:
             # The location of the Calico etcd cluster.
             - name: ETCD_ENDPOINTS
@@ -185,7 +185,7 @@ spec:
             # Disable IPv6 on Kubernetes.
             - name: FELIX_IPV6SUPPORT
               value: "false"
-            # Set Felix logging 
+            # Set Felix logging
             - name: FELIX_LOGSEVERITYSCREEN
               value: "warning"
             - name: FELIX_HEALTHENABLED
@@ -236,7 +236,7 @@ spec:
         # This container installs the Calico CNI binaries
         # and CNI network config file on each node.
         - name: install-cni
-          image: calico/cni:{{ calico_ver }}
+          image: {{ IMG_CALICO_CNI }}:{{ calico_ver }}
           command: ["/install-cni.sh"]
           env:
             # Name of the CNI config file to create.
