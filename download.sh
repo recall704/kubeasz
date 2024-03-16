@@ -88,6 +88,8 @@ function download_docker() {
         curl -k -C- -O --retry 3 "$DOCKER_URL" || { logger error "downloading docker failed"; exit 1; }
         fi
         /bin/mv -f "./docker-$DOCKER_VER.tgz" "$BASE/down"
+        tar zxf "$BASE/down/docker-$DOCKER_VER.tgz" -C "$BASE/down" && \
+        /bin/cp -f "$BASE"/down/docker/* "$BASE/bin"
     fi
 }
 

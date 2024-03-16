@@ -11,6 +11,7 @@ docker-it:
 	- docker run --rm -it \
 		--name kubeasz \
 		--network host \
+		-e ANSIBLE_CONFIG="/etc/kubeasz/ansible.cfg" \
 		-v ${PWD}:/etc/kubeasz \
 		-v /root/.kube:/root/.kube \
 		-v /root/.ssh:/root/.ssh \
