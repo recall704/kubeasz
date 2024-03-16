@@ -234,6 +234,8 @@ IMG_CALICO_CNI: calico/cni:v3.19.3
 IMG_CALICO_KUBE_CONTROLLERS: calico/kube-controllers:v3.19.3
 IMG_CALICO_POD2DAEMON_FLEXVOL: calico/pod2daemon-flexvol:v3.19.3
 
+IMG_FLANNEL: quay.io/coreos/flannel:v0.10.0-amd64
+
 IMG_COREDNS: coredns/coredns:1.8.6
 IMG_METRICS_SERVER: k8s.gcr.io/metrics-server/metrics-server:v0.5.2
 
@@ -245,7 +247,7 @@ IMG_CILIUM_ETCD_OPERATOR: docker.io/cilium/cilium-etcd-operator:v2.0.5
 IMG_DASHBOARD: kubernetesui/dashboard:v2.4.0
 IMG_DASHBOARD_METRICS_SCRAPER: kubernetesui/metrics-scraper:v1.0.7
 
-IMG_KUBEDNS: gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.13
+IMG_KUBE_DNS: gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.13
 IMG_DNSMASQ: gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.13
 IMG_DNS_SIDECAR: gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.13
 IMG_DNS_NODE_CACHE: k8s.gcr.io/dns/k8s-dns-node-cache:1.16.0
