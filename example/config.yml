@@ -229,10 +229,30 @@ HARBOR_WITH_CHARTMUSEUM: true
 ####################################################################################################
 #     镜像名称
 ####################################################################################################
-IMG_CALICO_NODE: calico/node
-IMG_CALICO_CNI: calico/cni
-IMG_CALICO_KUBE_CONTROLLERS: calico/kube-controllers
-IMG_CALICO_POD2DAEMON_FLEXVOL: calico/pod2daemon-flexvol
+IMG_CALICO_NODE: calico/node:v3.19.3
+IMG_CALICO_CNI: calico/cni:v3.19.3
+IMG_CALICO_KUBE_CONTROLLERS: calico/kube-controllers:v3.19.3
+IMG_CALICO_POD2DAEMON_FLEXVOL: calico/pod2daemon-flexvol:v3.19.3
 
-IMG_COREDNS: coredns/coredns
-IMG_METRICS_SERVER: k8s.gcr.io/metrics-server/metrics-server
+IMG_COREDNS: coredns/coredns:1.8.6
+IMG_METRICS_SERVER: k8s.gcr.io/metrics-server/metrics-server:v0.5.2
+
+IMG_CILIUM: cilium/cilium:v1.4.1
+IMG_CILIUM_INIT: docker.io/cilium/cilium-init:2018-10-16
+IMG_CILIUM_OPERATOR: docker.io/cilium/operator:v1.4.1
+IMG_CILIUM_ETCD_OPERATOR: docker.io/cilium/cilium-etcd-operator:v2.0.5
+
+IMG_DASHBOARD: kubernetesui/dashboard:v2.4.0
+IMG_DASHBOARD_METRICS_SCRAPER: kubernetesui/metrics-scraper:v1.0.7
+
+IMG_KUBEDNS: gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.13
+IMG_DNSMASQ: gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.13
+IMG_DNS_SIDECAR: gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.13
+IMG_DNS_NODE_CACHE: k8s.gcr.io/dns/k8s-dns-node-cache:1.16.0
+
+IMG_METALLB_SPEAKER: metallb/speaker:v0.7.3
+IMG_METALLB_CONTROLLER: metallb/controller:v0.7.3
+IMG_NFS_SUBDIR_PROVISIONER: gcr.io/k8s-staging-sig-storage/nfs-subdir-external-provisioner:v4.0.1
+IMG_BUSYBOX: busybox
+IMG_KUBE_OVN: kubeovn/kube-ovn:v1.5.3
+IMG_KUBE_ROUTER: cloudnativelabs/kube-router:{{ kube_router_ver }}

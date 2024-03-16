@@ -135,7 +135,7 @@ spec:
         - --kubelet-insecure-tls
         - --kubelet-use-node-status-port
         - --metric-resolution=15s
-        image: {{ IMG_METRICS_SERVER }}:{{ metricsVer }}
+        image: {{ IMG_METRICS_SERVER }}
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
