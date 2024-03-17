@@ -259,5 +259,17 @@ IMG_BUSYBOX: busybox
 IMG_KUBE_OVN: kubeovn/kube-ovn:v1.5.3
 IMG_KUBE_ROUTER: cloudnativelabs/kube-router:{{ kube_router_ver }}
 
+kuboard_offline: "kuboard_v3.5.2.6.tar"
 kuboard_install: "yes"
 IMG_KUBOARD: eipwork/kuboard:v3.5.2.6
+
+IMG_PROMETHEUS_ALERTMANAGER: quay.io/prometheus/alertmanager
+IMG_PROMETHEUS_ALERTMANAGER_TAG: v0.21.0
+IMG_PROMETHEUS_OPERATOR : quay.io/prometheus-operator/prometheus-operator
+IMG_PROMETHEUS_OPERATOR_TAG: v0.44.0
+IMG_PROMETHEUS_EXT_CONFIG_RELOADER: docker.io/jimmidyson/configmap-reload
+IMG_PROMETHEUS_EXT_CONFIG_RELOADER_TAG: v0.4.0
+IMG_PROMETHEUS_CONFIG_RELOADER: quay.io/prometheus-operator/prometheus-config-reloader
+IMG_PROMETHEUS_CONFIG_RELOADER_TAG: v0.44.0
+IMG_PROMETHEUS: quay.io/prometheus/prometheus
+IMG_PROMETHEUS_TAG: v2.22.1

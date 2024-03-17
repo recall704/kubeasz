@@ -41,7 +41,7 @@
   when: '"nfs-client-provisioner" not in pod_info.stdout and nfs_provisioner_install == "yes"'
 
 - import_tasks: kuboard.yml
-  when: 'kuboard_install == "yes"'
+  when: 'kuboard_install == "yes" and CONTAINER_RUNTIME == "docker"'
 
 #- block:
 #    - block:
