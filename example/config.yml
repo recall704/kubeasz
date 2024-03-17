@@ -186,7 +186,7 @@ metricsserver_install: "yes"
 metricsVer: "__metrics__"
 
 # dashboard 自动安装
-dashboard_install: "yes"
+dashboard_install: "no"
 dashboardVer: "__dashboard__"
 dashboardMetricsScraperVer: "__dash_metrics__"
 
@@ -258,3 +258,6 @@ IMG_NFS_SUBDIR_PROVISIONER: gcr.io/k8s-staging-sig-storage/nfs-subdir-external-p
 IMG_BUSYBOX: busybox
 IMG_KUBE_OVN: kubeovn/kube-ovn:v1.5.3
 IMG_KUBE_ROUTER: cloudnativelabs/kube-router:{{ kube_router_ver }}
+
+kuboard_install: "yes"
+IMG_KUBOARD: eipwork/kuboard:v3.5.2.6
