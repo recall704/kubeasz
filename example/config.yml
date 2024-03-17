@@ -237,7 +237,8 @@ IMG_CALICO_POD2DAEMON_FLEXVOL: calico/pod2daemon-flexvol:v3.19.3
 IMG_FLANNEL: quay.io/coreos/flannel:v0.10.0-amd64
 
 IMG_COREDNS: coredns/coredns:1.8.6
-IMG_METRICS_SERVER: k8s.gcr.io/metrics-server/metrics-server:v0.5.2
+# IMG_METRICS_SERVER: k8s.gcr.io/metrics-server/metrics-server:v0.5.2
+IMG_METRICS_SERVER: easzlab/metrics-server:v0.5.2
 
 IMG_CILIUM: cilium/cilium:v1.4.1
 IMG_CILIUM_INIT: docker.io/cilium/cilium-init:2018-10-16
@@ -250,7 +251,8 @@ IMG_DASHBOARD_METRICS_SCRAPER: kubernetesui/metrics-scraper:v1.0.7
 IMG_KUBE_DNS: gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.13
 IMG_DNSMASQ: gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.13
 IMG_DNS_SIDECAR: gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.13
-IMG_DNS_NODE_CACHE: k8s.gcr.io/dns/k8s-dns-node-cache:1.16.0
+IMG_DNS_NODE_CACHE: easzlab/k8s-dns-node-cache:1.21.1
+# IMG_DNS_NODE_CACHE: k8s.gcr.io/dns/k8s-dns-node-cache:1.21.1
 
 IMG_METALLB_SPEAKER: metallb/speaker:v0.7.3
 IMG_METALLB_CONTROLLER: metallb/controller:v0.7.3
