@@ -184,7 +184,7 @@ spec:
     spec:
       containers:
         - name: kubernetes-dashboard
-          image: kubernetesui/dashboard:{{ dashboardVer }}
+          image: {{ IMG_DASHBOARD }}
           ports:
             - containerPort: 8443
               protocol: TCP
@@ -270,7 +270,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: dashboard-metrics-scraper
-          image: kubernetesui/metrics-scraper:{{ dashboardMetricsScraperVer }}
+          image: {{ IMG_DASHBOARD_METRICS_SCRAPER }}
           ports:
             - containerPort: 8000
               protocol: TCP

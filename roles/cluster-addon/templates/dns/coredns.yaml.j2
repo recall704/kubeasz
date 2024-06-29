@@ -133,7 +133,7 @@ spec:
         kubernetes.io/os: linux
       containers:
       - name: coredns
-        image: coredns/coredns:{{ corednsVer }}
+        image: {{ IMG_COREDNS }}
         imagePullPolicy: IfNotPresent
         resources:
           limits:

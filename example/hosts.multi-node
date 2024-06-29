@@ -29,24 +29,32 @@
 #192.168.1.1
 
 [all:vars]
+# ansible_port = 22
+# ansible_user = appuser
+# ansible_ssh_pass = 123456
+# become = yes
+# become_user = root
+# become_method = sudo
+# ansible_become_pass = 123456
+
 # --------- Main Variables ---------------
 # Secure port for apiservers
 SECURE_PORT="6443"
 
 # Cluster container-runtime supported: docker, containerd
-CONTAINER_RUNTIME="containerd"
+CONTAINER_RUNTIME="docker"
 
 # Network plugins supported: calico, flannel, kube-router, cilium, kube-ovn
-CLUSTER_NETWORK="calico"
+CLUSTER_NETWORK="flannel"
 
 # Service proxy mode of kube-proxy: 'iptables' or 'ipvs'
-PROXY_MODE="ipvs"
+PROXY_MODE="iptables"
 
 # K8S Service CIDR, not overlap with node(host) networking
-SERVICE_CIDR="10.68.0.0/16"
+SERVICE_CIDR="22.30.0.0/16"
 
 # Cluster CIDR (Pod CIDR), not overlap with node(host) networking
-CLUSTER_CIDR="172.20.0.0/16"
+CLUSTER_CIDR="22.20.0.0/16"
 
 # NodePort Range
 NODE_PORT_RANGE="30000-32767"

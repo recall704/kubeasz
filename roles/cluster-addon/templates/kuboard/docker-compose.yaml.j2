@@ -1,0 +1,15 @@
+version: '3.3'
+
+services:
+  kuboard:
+    image: {{ IMG_KUBOARD }}
+    privileged: true
+    environment:
+      KUBOARD_AGENT_SERVER_TCP_PORT: "20081"
+      KUBOARD_ADMIN_DERAULT_PASSWORD: "Admin!2024"
+    volumes:
+    - ./data:/data
+    ports:
+    - 20080:80
+    - 20081:10081
+    restart: always

@@ -25,7 +25,7 @@ data:
     }
 
 ---
-apiVersion: apps/v1 
+apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   labels:
@@ -47,7 +47,7 @@ spec:
       serviceAccountName: kube-router
       containers:
       - name: kube-router
-        image: cloudnativelabs/kube-router:{{ kube_router_ver }} 
+        image: {{ IMG_KUBE_ROUTER }}
         imagePullPolicy: IfNotPresent
         args:
         - "--hostname-override=RT-{{ inventory_hostname }}"
@@ -82,7 +82,7 @@ spec:
           mountPath: /etc/cni/net.d
       initContainers:
       - name: install-cni
-        image: busybox:{{ busybox_ver }}
+        image: {{ IMG_BUSYBOX }}
         imagePullPolicy: IfNotPresent
         command:
         - /bin/sh
@@ -100,7 +100,7 @@ spec:
         - mountPath: /etc/cni/net.d
           name: cni-conf-dir
         - mountPath: /etc/kube-router
-          name: kube-router-cfg       
+          name: kube-router-cfg
       hostNetwork: true
       tolerations:
       - key: CriticalAddonsOnly

@@ -92,8 +92,7 @@ spec:
       serviceAccountName: nfs-client-provisioner
       containers:
         - name: nfs-client-provisioner
-          #image: gcr.io/k8s-staging-sig-storage/nfs-subdir-external-provisioner:v4.0.1
-          image: easzlab/nfs-subdir-external-provisioner:{{ nfs_provisioner_ver }}
+          image: {{ IMG_NFS_SUBDIR_PROVISIONER }}
           volumeMounts:
             - name: nfs-client-root
               mountPath: /persistentvolumes

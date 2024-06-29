@@ -2,7 +2,7 @@
 # prepare
 ############################
 # 可选离线安装系统软件包 (offline|online)
-INSTALL_SOURCE: "online"
+INSTALL_SOURCE: "offline"
 
 # 可选进行系统安全加固 github.com/dev-sec/ansible-collection-hardening
 OS_HARDEN: false
@@ -186,7 +186,7 @@ metricsserver_install: "yes"
 metricsVer: "__metrics__"
 
 # dashboard 自动安装
-dashboard_install: "yes"
+dashboard_install: "no"
 dashboardVer: "__dashboard__"
 dashboardMetricsScraperVer: "__dash_metrics__"
 
@@ -224,3 +224,54 @@ HARBOR_WITH_NOTARY: false
 HARBOR_WITH_TRIVY: false
 HARBOR_WITH_CLAIR: false
 HARBOR_WITH_CHARTMUSEUM: true
+
+
+####################################################################################################
+#     镜像名称
+####################################################################################################
+IMG_CALICO_NODE: calico/node:v3.19.3
+IMG_CALICO_CNI: calico/cni:v3.19.3
+IMG_CALICO_KUBE_CONTROLLERS: calico/kube-controllers:v3.19.3
+IMG_CALICO_POD2DAEMON_FLEXVOL: calico/pod2daemon-flexvol:v3.19.3
+
+IMG_FLANNEL: quay.io/coreos/flannel:v0.10.0-amd64
+
+IMG_COREDNS: coredns/coredns:1.8.6
+# IMG_METRICS_SERVER: k8s.gcr.io/metrics-server/metrics-server:v0.5.2
+IMG_METRICS_SERVER: easzlab/metrics-server:v0.5.2
+
+IMG_CILIUM: cilium/cilium:v1.4.1
+IMG_CILIUM_INIT: docker.io/cilium/cilium-init:2018-10-16
+IMG_CILIUM_OPERATOR: docker.io/cilium/operator:v1.4.1
+IMG_CILIUM_ETCD_OPERATOR: docker.io/cilium/cilium-etcd-operator:v2.0.5
+
+IMG_DASHBOARD: kubernetesui/dashboard:v2.4.0
+IMG_DASHBOARD_METRICS_SCRAPER: kubernetesui/metrics-scraper:v1.0.7
+
+IMG_KUBE_DNS: gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.13
+IMG_DNSMASQ: gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.13
+IMG_DNS_SIDECAR: gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.13
+IMG_DNS_NODE_CACHE: easzlab/k8s-dns-node-cache:1.21.1
+# IMG_DNS_NODE_CACHE: k8s.gcr.io/dns/k8s-dns-node-cache:1.21.1
+
+IMG_METALLB_SPEAKER: metallb/speaker:v0.7.3
+IMG_METALLB_CONTROLLER: metallb/controller:v0.7.3
+IMG_NFS_SUBDIR_PROVISIONER: gcr.io/k8s-staging-sig-storage/nfs-subdir-external-provisioner:v4.0.1
+IMG_BUSYBOX: busybox
+IMG_KUBE_OVN: kubeovn/kube-ovn:v1.5.3
+IMG_KUBE_ROUTER: cloudnativelabs/kube-router:{{ kube_router_ver }}
+
+kuboard_offline: "kuboard_v3.5.2.6.tar"
+kuboard_install: "yes"
+IMG_KUBOARD: eipwork/kuboard:v3.5.2.6
+
+IMG_PROMETHEUS_ALERTMANAGER: quay.io/prometheus/alertmanager
+IMG_PROMETHEUS_ALERTMANAGER_TAG: v0.21.0
+IMG_PROMETHEUS_OPERATOR : quay.io/prometheus-operator/prometheus-operator
+IMG_PROMETHEUS_OPERATOR_TAG: v0.44.0
+IMG_PROMETHEUS_EXT_CONFIG_RELOADER: docker.io/jimmidyson/configmap-reload
+IMG_PROMETHEUS_EXT_CONFIG_RELOADER_TAG: v0.4.0
+IMG_PROMETHEUS_CONFIG_RELOADER: quay.io/prometheus-operator/prometheus-config-reloader
+IMG_PROMETHEUS_CONFIG_RELOADER_TAG: v0.44.0
+IMG_PROMETHEUS: quay.io/prometheus/prometheus
+IMG_PROMETHEUS_TAG: v2.22.1

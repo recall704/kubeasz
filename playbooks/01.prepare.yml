@@ -1,4 +1,4 @@
-# [optional] to synchronize system time of nodes with 'chrony' 
+# [optional] to synchronize system time of nodes with 'chrony'
 - hosts:
   - kube_master
   - kube_node

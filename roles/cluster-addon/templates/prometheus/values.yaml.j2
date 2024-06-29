@@ -23,12 +23,12 @@ alertmanager:
   ## Configuration for Alertmanager service
   service:
     nodePort: 30902
-    type: NodePort 
+    type: NodePort
 
   alertmanagerSpec:
     image:
-      repository: quay.io/prometheus/alertmanager
-      tag: v0.21.0
+      repository: {{ IMG_PROMETHEUS_ALERTMANAGER }}
+      tag: {{ IMG_PROMETHEUS_ALERTMANAGER_TAG }}
 
     replicas: 1
     retention: 120h
@@ -43,7 +43,7 @@ grafana:
 
   service:
     nodePort: 30903
-    type: NodePort 
+    type: NodePort
 
 ## Component scraping the kube api server
 kubeApiServer:
@@ -78,7 +78,7 @@ kubeEtcd:
   ## specifying security configuration below. For example, with a secret named etcd-client-cert
   serviceMonitor:
     scheme: https
-    insecureSkipVerify: true 
+    insecureSkipVerify: true
     serverName: localhost
     caFile: /etc/prometheus/secrets/etcd-client-cert/etcd-ca
     certFile: /etc/prometheus/secrets/etcd-client-cert/etcd-client
@@ -129,24 +129,24 @@ prometheusOperator:
   service:
     nodePort: 30899
     nodePortTls: 30900
-    type: NodePort 
+    type: NodePort
 
   nodeSelector: {}
 
   ## Prometheus-operator image
   image:
-    repository: quay.io/prometheus-operator/prometheus-operator
-    tag: v0.44.0
+    repository: {{ IMG_PROMETHEUS_OPERATOR }}
+    tag: {{ IMG_PROMETHEUS_OPERATOR_TAG }}
 
   ## Configmap-reload image to use for reloading configmaps
   configmapReloadImage:
-    repository: docker.io/jimmidyson/configmap-reload
-    tag: v0.4.0
+    repository: {{ IMG_PROMETHEUS_EXT_CONFIG_RELOADER }}
+    tag: {{ IMG_PROMETHEUS_EXT_CONFIG_RELOADER_TAG }}
 
   ## Prometheus-config-reloader image to use for config and rule reloading
   prometheusConfigReloaderImage:
-    repository: quay.io/prometheus-operator/prometheus-config-reloader
-    tag: v0.44.0
+    repository: {{ IMG_PROMETHEUS_CONFIG_RELOADER }}
+    tag: {{ IMG_PROMETHEUS_CONFIG_RELOADER_TAG }}
 
 ## Deploy a Prometheus instance
 prometheus:
@@ -155,7 +155,7 @@ prometheus:
   ## Configuration for Prometheus service
   service:
     nodePort: 30901
-    type: NodePort 
+    type: NodePort
 
   ## Settings affecting prometheusSpec
   ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#prometheusspec
@@ -166,7 +166,7 @@ prometheus:
 
     image:
       repository: quay.io/prometheus/prometheus
-      tag: v2.22.1
+      tag: {{ IMG_PROMETHEUS_TAG }}
 
     replicas: 1
 
