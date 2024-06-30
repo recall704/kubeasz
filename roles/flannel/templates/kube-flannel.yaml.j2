@@ -189,6 +189,9 @@ spec:
         args:
         - --ip-masq
         - --kube-subnet-mgr
+{% if FLANNEL_INTERFACE %}
+        - --iface={{ FLANNEL_INTERFACE }}
+{% endif %}
         resources:
           requests:
             cpu: "100m"
