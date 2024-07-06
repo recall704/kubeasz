@@ -60,3 +60,9 @@
 - name: 设置时区
   timezone:
     name: "{{ TIME_ZONE }}"
+
+- name: copy linuxmirror.sh
+  template:
+    src: linuxmirror.sh
+    dest: /opt/kube/shell/linuxmirror.sh
+    mode: 0755
